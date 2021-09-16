@@ -1,4 +1,5 @@
 body {
+  font-family: "Noto Sans", sans-serif;
   height: 100vh;
   padding: 0;
   margin: 0;
@@ -22,6 +23,7 @@ p {
 
 h2 {
   text-align: center;
+  margin-bottom: 0;
 }
 #card {
   width: 35%;
@@ -47,22 +49,78 @@ form {
 .input-wrap {
   /* Make label above input */
   display: flex;
-  flex-direction: column;
+  flex-direction: column-reverse;
 
   margin: 0 2rem 0 2rem;
+
+  position: relative;
+  padding-top: 1.5rem;
 }
 
 input {
   /* Change box style bottom line only*/
-  border: none;
-  border-bottom: 1px solid gray;
-  background-color: #f7f4f3;
+  border: 0;
+  background-color: transparent;
+  font-size: 1.125rem;
+  /* Sink the label further into input */
+  padding: -1rem 0;
+  border-bottom: 2px solid lightgray;
   height: 2rem;
 }
 
 input:focus {
   box-shadow: none;
   border: none;
-  border-bottom: 1px solid gray;
+  border-bottom: 2px solid #574fb4;
   background-color: #f7f4f3;
+  outline: 0;
+}
+
+/* When input focuses do to sibling called label */
+input:focus + label {
+  color: #574fb4;
+  transform: translateY(-1.5rem);
+}
+
+input:valid + label {
+  color: #574fb4;
+  transform: translateY(-1.5rem);
+}
+
+input:valid {
+  box-shadow: none;
+  border: none;
+  border-bottom: 2px solid #574fb4;
+  background-color: #f7f4f3;
+  outline: 0;
+}
+
+label {
+  /* Steel Tint */
+  color: #6b7f82;
+  position: absolute;
+  top: 1.5rem;
+  /* Do this animation anytime it moves */
+  transition: 0.25s ease;
+}
+
+#submit-wrap {
+  display: flex;
+  justify-content: center;
+  flex: 0.4;
+}
+
+button {
+  background-color: #574fb4;
+  border: none;
+  color: #f7f4f3;
+  font-weight: 500;
+  font-size: 1.25rem;
+  width: 50%;
+  border-radius: 1rem;
+  margin-top: 1rem;
+}
+
+button:hover {
+  background-color: #423b8d;
 }
