@@ -83,7 +83,7 @@ ini_set("error_log","php_errors.txt");
                     // if first time display empty
                     if (isset($_POST["NHI"])) { 
                         $NHI_value = $_POST["NHI"];
-                        setcookie("NHI", $NHI_value, time() + 3600, "/");
+                        // setcookie("NHI", $NHI_value, time() + 3600, "/");
                     } else if (isset($_COOKIE["NHI"])) {
                         $NHI_value = $_COOKIE["NHI"];
                     } else $NHI_value = "";
@@ -93,7 +93,7 @@ ini_set("error_log","php_errors.txt");
                     // if first time display empty
                     if (isset($_POST["fname"])) { 
                         $fname_value = $_POST["fname"];
-                        setcookie("fname", $fname_value, time() + 3600, "/");
+                        // setcookie("fname", $fname_value, time() + 3600, "/");
                     } else if (isset($_COOKIE["fname"])) {
                         
                         $fname_value = $_COOKIE["fname"];
@@ -106,7 +106,7 @@ ini_set("error_log","php_errors.txt");
                     // if first time display empty
                     if (isset($_POST["lname"])) { 
                         $lname_value = $_POST["lname"];
-                        setcookie("lname", $lname_value, time() + 3600, "/");
+                        // setcookie("lname", $lname_value, time() + 3600, "/");
                     } else if (isset($_COOKIE["lname"])) {
                         
                         $lname_value = $_COOKIE["lname"];
