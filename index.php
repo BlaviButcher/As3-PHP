@@ -1,3 +1,11 @@
+<?php
+ini_set("error_reporting",E_ALL);
+ini_set("log_errors","1");
+ini_set("error_log","php_errors.txt");
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -24,19 +32,19 @@
     <!-- PHP code to validate URL variables on the server -->
     <?php
     // Assume that both name and age are valid
-    $NHI_valid = FALSE;
-    $NHI_empty = TRUE;
+    $NHI_valid = "";
+    // $NHI_empty = FALSE;
 
     $fname_valid = FALSE;
-    $fname_empty = TRUE;
+    // $fname_empty = FALSE;
 
     $lname_valid = FALSE;
-    $lname_empty = TRUE;
+    // $lname_empty = FALSE;
 
-    // Check to see if name is invalid (has less than 3 characters)
-    if (isset($_POST["NHI"])) {
-        $NHI_valid = strlen($_POST["NHI"]) > 0 ? TRUE : FALSE;
-        $NHI_empty = strlen($_POST["NHI"]) > 0 ? FALSE : TRUE;
+    // Check to see if name is valid (has more then 1 char) - Set error message if invalid
+    if (isset($_POST["fname"])) {
+        $fname_valid = strlen($_POST["fname"]) > 1 ? "": "Name must be atleast 1 character";
+        // $NHI_empty = strlen($_POST["NHI"]) > 0 ? FALSE : TRUE;
     }
     
     // // Check to see if age is invalid (is a non-integer or is not positive)
@@ -46,12 +54,12 @@
     //   }
       
     // }
-    // // If both inputs are present and valid, proceed
-    // if (count($_GET)>0)
-    //   if ($name_valid && $age_valid) {
-	//   header("Location:proceed.php");
-	//   exit();
-    //   }
+        // If all inputs are present and valid, proceed
+        if (count($_POST) == 2)
+        if (!empty($NHI_valid) && !empty($fname_valid) && !empty($lname_valid)) {
+            header("Location:proceed.php");
+            exit();
+        }
     ?>
 
 
@@ -68,21 +76,58 @@
         <form id="user-credential-form" action="index.php" method="post" novalidate>
             <div class="input-wrap">
                 <?php 
-                    // Hold onto values from validation loop
-                    if (!isset($_POST["NHI"])) $NHI_value = "";
-                    else $NHI_value = $_POST["NHI"];
-                    if (!isset($_POST["fname"])) $fname_value = "";
-                    else $fname_value = $_POST["fname"];
-                    if (!isset($_POST["lname"])) $lname_value = "";
-                    else $lname_value = $_POST["lname"];
+                    // Validation loop and cookies handlers
+
+                    // if something is posted then replace previous cookie and set varaible
+                    // else grab cooking
+                    // if first time display empty
+                    if (isset($_POST["NHI"])) { 
+                        $NHI_value = $_POST["NHI"];
+                        setcookie("NHI", $NHI_value, time() + 3600, "/");
+                    } else if (isset($_COOKIE["NHI"])) {
+                        $NHI_value = $_COOKIE["NHI"];
+                    } else $NHI_value = "";
+
+                    // if something is posted then replace previous cookie and set varaible
+                    // else grab cookingsf
+                    // if first time display empty
+                    if (isset($_POST["fname"])) { 
+                        $fname_value = $_POST["fname"];
+                        setcookie("fname", $fname_value, time() + 3600, "/");
+                    } else if (isset($_COOKIE["fname"])) {
+                        
+                        $fname_value = $_COOKIE["fname"];
+                        error_log($fname_value, 0);
+
+                    } else $fname_value = "";
+
+                    // if something is posted then replace previous cookie and set varaible
+                    // else grab cooking
+                    // if first time display empty
+                    if (isset($_POST["lname"])) { 
+                        $lname_value = $_POST["lname"];
+                        setcookie("lname", $lname_value, time() + 3600, "/");
+                    } else if (isset($_COOKIE["lname"])) {
+                        
+                        $lname_value = $_COOKIE["lname"];
+                        error_log($lname_value, 0);
+
+                    } else $lname_value = "";
                 ?>
                 <input type="text" name="NHI" id="NHI-input" required value=<?php echo $NHI_value; ?>>
                 <label for="NHI-input" class="form-label">NHI</label>
+
 
             </div>
             <div class="input-wrap">
                 <input type="text" name="fname" id="fname-input" required value=<?php echo $fname_value; ?>>
                 <label for="fname-input" class="form-label">First Name</label>
+                <?php 
+                // Add error message if error exists
+                    if (!empty($fname_valid)) {
+                        echo '<div data-type="validator-error">'.$fname_valid.'</div>';
+                    }
+                ?>
             </div>
             <div class="input-wrap">
                 <input type="text" name="lname" id="lname-input" required value=<?php echo $lname_value; ?>>
