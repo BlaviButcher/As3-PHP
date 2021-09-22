@@ -153,7 +153,6 @@ $is_valid_data = FALSE;
 
         if (empty($NHI_valid) && empty($fname_valid) && empty($lname_valid)) {
             
-            $is_valid_data = TRUE;
                   
         }
     }
