@@ -35,14 +35,15 @@ ini_set("error_log","php_errors.txt");
     $NHI_valid = "";
     // $NHI_empty = FALSE;
 
-    $fname_valid = FALSE;
+    $fname_valid = "";
     // $fname_empty = FALSE;
 
-    $lname_valid = FALSE;
+    $lname_valid = "";
     // $lname_empty = FALSE;
 
     // Check to see if name is valid (has more then 1 char) - Set error message if invalid
     if (isset($_POST["fname"])) {
+
         $fname_valid = strlen($_POST["fname"]) > 1 ? "": "Name must be atleast 1 character";
         // $NHI_empty = strlen($_POST["NHI"]) > 0 ? FALSE : TRUE;
     }
@@ -55,10 +56,12 @@ ini_set("error_log","php_errors.txt");
       
     // }
         // If all inputs are present and valid, proceed
-        if (count($_POST) == 2)
-        if (!empty($NHI_valid) && !empty($fname_valid) && !empty($lname_valid)) {
-            header("Location:proceed.php");
-            exit();
+        if (count($_POST) == 3) {
+
+            if (empty($NHI_valid) && empty($fname_valid) && empty($lname_valid)) {
+                header("Location:./php/sofa.php");
+                exit();
+            }
         }
     ?>
 
@@ -97,7 +100,6 @@ ini_set("error_log","php_errors.txt");
                     } else if (isset($_COOKIE["fname"])) {
                         
                         $fname_value = $_COOKIE["fname"];
-                        error_log($fname_value, 0);
 
                     } else $fname_value = "";
 
