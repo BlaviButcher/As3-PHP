@@ -154,7 +154,7 @@ ini_set("error_log", "php_errors.txt");
         if (empty($NHI_valid) && empty($fname_valid) && empty($lname_valid)) {
             // set cookies if valid info
             
-            header("Location:./php/sofa.php?patient-nhi=" . $_POST["NHI"] . "&patient-fname=" . $_POST["fname"] . "&paitent_lname=" . $_POST[lname]);
+            header("Location:./php/sofa.php?patient-nhi=" . $_POST["NHI"] . "&patient-fname=" . $_POST["fname"] . "&paitent_lname=" . $_POST["lname"]);
             exit();
         }
     }
