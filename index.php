@@ -153,7 +153,12 @@ $is_valid_data = FALSE;
 
         if (empty($NHI_valid) && empty($fname_valid) && empty($lname_valid)) {
             
+<<<<<<< HEAD
                   
+=======
+            header("Location:./php/sofa.php?patient-nhi=" . $_POST["NHI"] . "&patient-fname=" . $_POST["fname"] . "&paitent_lname=" . $_POST[lname]);
+            exit();
+>>>>>>> parent of 1f3142a... :bug: index.php fixed error
         }
     }
 ?>
