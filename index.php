@@ -1,7 +1,7 @@
 <?php
-ini_set("error_reporting",E_ALL);
-ini_set("log_errors","1");
-ini_set("error_log","php_errors.txt");
+ini_set("error_reporting", E_ALL);
+ini_set("log_errors", "1");
+ini_set("error_log", "php_errors.txt");
 
 ?>
 
@@ -20,8 +20,7 @@ ini_set("error_log","php_errors.txt");
     <!-- font-family: "Noto Sans", sans-serif; -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,700;1,400&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 
     <script src="js/script.js" defer></script>
     <script src="js/js-form-validator.min.js"></script>
@@ -44,25 +43,62 @@ ini_set("error_log","php_errors.txt");
     // Check to see if name is valid (has more then 1 char) - Set error message if invalid
     if (isset($_POST["fname"])) {
 
-        $fname_valid = strlen($_POST["fname"]) > 1 ? "": "Name must be atleast 1 character";
+        $fname_valid = strlen($_POST["fname"]) > 1 ? "" : "Name must be atleast 1 character";
         // $NHI_empty = strlen($_POST["NHI"]) > 0 ? FALSE : TRUE;
     }
-    
+
+
+    // Validation loop and cookies handlers
+
+    // if something is posted then replace previous cookie and set varaible
+    // else grab cooking
+    // if first time display empty
+    if (isset($_POST["NHI"])) {
+        $NHI_value = $_POST["NHI"];
+    } else if (isset($_COOKIE["NHI"])) {
+        $NHI_value = $_COOKIE["NHI"];
+    } else $NHI_value = "";
+
+    // if something is posted then replace previous cookie and set varaible
+    // else grab cookingsf
+    // if first time display empty
+    if (isset($_POST["fname"])) {
+        $fname_value = $_POST["fname"];
+    } else if (isset($_COOKIE["fname"])) {
+        $fname_value = $_COOKIE["fname"];
+    } else $fname_value = "";
+
+    // if something is posted then replace previous cookie and set varaible
+    // else grab cooking
+    // if first time display empty
+    if (isset($_POST["lname"])) {
+        $lname_value = $_POST["lname"];
+    } else if (isset($_COOKIE["lname"])) {
+        $lname_value = $_COOKIE["lname"];
+        error_log($lname_value, 0);
+    } else $lname_value = "";
+
+
     // // Check to see if age is invalid (is a non-integer or is not positive)
     // if (isset($_POST["fname"])) {
     //   if (strlen($_POST["fname"]) == 0) {
     //       $fname_valid = FALSE;
     //   }
-      
-    // }
-        // If all inputs are present and valid, proceed
-        if (count($_POST) == 3) {
 
-            if (empty($NHI_valid) && empty($fname_valid) && empty($lname_valid)) {
-                header("Location:./php/sofa.php");
-                exit();
-            }
+    // }
+    // If all inputs are present and valid, proceed
+    if (count($_POST) == 3) {
+
+        if (empty($NHI_valid) && empty($fname_valid) && empty($lname_valid)) {
+            // set cookies if valid info
+            setcookie("NHI", $NHI_value, time() + 3600, "/");
+            setcookie("fname", $fname_value, time() + 3600, "/");
+            setcookie("lname", $lname_value, time() + 3600, "/");
+
+            header("Location:./php/sofa.php");
+            exit();
         }
+    }
     ?>
 
 
@@ -78,44 +114,7 @@ ini_set("error_log","php_errors.txt");
         <h2>Enter Credentials</h2>
         <form id="user-credential-form" action="index.php" method="post" novalidate>
             <div class="input-wrap">
-                <?php 
-                    // Validation loop and cookies handlers
 
-                    // if something is posted then replace previous cookie and set varaible
-                    // else grab cooking
-                    // if first time display empty
-                    if (isset($_POST["NHI"])) { 
-                        $NHI_value = $_POST["NHI"];
-                        // setcookie("NHI", $NHI_value, time() + 3600, "/");
-                    } else if (isset($_COOKIE["NHI"])) {
-                        $NHI_value = $_COOKIE["NHI"];
-                    } else $NHI_value = "";
-
-                    // if something is posted then replace previous cookie and set varaible
-                    // else grab cookingsf
-                    // if first time display empty
-                    if (isset($_POST["fname"])) { 
-                        $fname_value = $_POST["fname"];
-                        // setcookie("fname", $fname_value, time() + 3600, "/");
-                    } else if (isset($_COOKIE["fname"])) {
-                        
-                        $fname_value = $_COOKIE["fname"];
-
-                    } else $fname_value = "";
-
-                    // if something is posted then replace previous cookie and set varaible
-                    // else grab cooking
-                    // if first time display empty
-                    if (isset($_POST["lname"])) { 
-                        $lname_value = $_POST["lname"];
-                        // setcookie("lname", $lname_value, time() + 3600, "/");
-                    } else if (isset($_COOKIE["lname"])) {
-                        
-                        $lname_value = $_COOKIE["lname"];
-                        error_log($lname_value, 0);
-
-                    } else $lname_value = "";
-                ?>
                 <input type="text" name="NHI" id="NHI-input" required value=<?php echo $NHI_value; ?>>
                 <label for="NHI-input" class="form-label">NHI</label>
 
@@ -124,11 +123,11 @@ ini_set("error_log","php_errors.txt");
             <div class="input-wrap">
                 <input type="text" name="fname" id="fname-input" required value=<?php echo $fname_value; ?>>
                 <label for="fname-input" class="form-label">First Name</label>
-                <?php 
+                <?php
                 // Add error message if error exists
-                    if (!empty($fname_valid)) {
-                        echo '<div data-type="validator-error">'.$fname_valid.'</div>';
-                    }
+                if (!empty($fname_valid)) {
+                    echo '<div data-type="validator-error">' . $fname_valid . '</div>';
+                }
                 ?>
             </div>
             <div class="input-wrap">
