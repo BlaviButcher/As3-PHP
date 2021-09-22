@@ -23,8 +23,6 @@ ini_set("error_log", "php_errors.txt");
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,700;1,400&display=swap"
         rel="stylesheet">
 
-    <script src="js/script.js" defer></script>
-    <script src="js/js-form-validator.min.js"></script>
 </head>
 
 <body>
@@ -89,19 +87,7 @@ ini_set("error_log", "php_errors.txt");
     } else $lname_value = "";
 
 
-    // If all inputs are present and valid, proceed
-    if (count($_POST) == 3) {
 
-        if (empty($NHI_valid) && empty($fname_valid) && empty($lname_valid)) {
-            // set cookies if valid info
-            setcookie("patient-nhi", $NHI_value, time() + 3600, "/");
-            setcookie("patient-fname", $fname_value, time() + 3600, "/");
-            setcookie("patient-lname", $lname_value, time() + 3600, "/");
-
-            header("Location:./php/sofa.php");
-            exit();
-        }
-    }
     ?>
 
 
@@ -160,6 +146,21 @@ ini_set("error_log", "php_errors.txt");
             </div>
         </form>
     </div>
+
+    <?php
+    // If all inputs are present and valid, proceed
+    if (count($_POST) == 3) {
+
+        if (empty($NHI_valid) && empty($fname_valid) && empty($lname_valid)) {
+            // set cookies if valid info
+
+            header("Location:./php/sofa.php");
+            exit();
+        }
+    }
+?>
+
+
 </body>
 
 </html>
