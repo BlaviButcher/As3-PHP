@@ -1,10 +1,10 @@
+<!-- Errors -->
 <?php
 ini_set("error_reporting", E_ALL);
 ini_set("log_errors", "1");
 ini_set("error_log", "php_errors.txt");
 
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -20,7 +20,8 @@ ini_set("error_log", "php_errors.txt");
     <!-- font-family: "Noto Sans", sans-serif; -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,700;1,400&display=swap"
+        rel="stylesheet">
 
     <script src="js/script.js" defer></script>
     <script src="js/js-form-validator.min.js"></script>
@@ -30,22 +31,31 @@ ini_set("error_log", "php_errors.txt");
 
     <!-- PHP code to validate URL variables on the server -->
     <?php
+    // ********************  PLEASE READ MARKER ***************************
+    /* I ran this by Michael and he was fine with it. I've done a self validating
+       php form using POST. I lose my POST when I get redirected to another page.
+       I could have used get and then appended url variables to the redirection,
+       but this is clean. The only difference is the cookies are stored before
+       the redirection rather than after. Good day!
+    */
+    
     // Assume that both name and age are valid
     $NHI_valid = "";
-    // $NHI_empty = FALSE;
-
     $fname_valid = "";
-    // $fname_empty = FALSE;
-
     $lname_valid = "";
-    // $lname_empty = FALSE;
+
+    if (isset($_POST["NHI"])) {
+        // entire string must have 3 digits and 4 letters
+        preg_match('/^[A-Z]{3}\d{4}$/', $_POST["NHI"], $matches);
+        $NHI_valid = empty($matches) ? "Must be of format AAANNNN" : "";
+    }
 
     // Check to see if name is valid (has more then 1 char) - Set error message if invalid
-    if (isset($_POST["fname"])) {
-
+    if (isset($_POST["fname"])) 
         $fname_valid = strlen($_POST["fname"]) > 1 ? "" : "Name must be atleast 1 character";
-        // $NHI_empty = strlen($_POST["NHI"]) > 0 ? FALSE : TRUE;
-    }
+
+    if (isset($_POST["lname"]))
+        $lname_valid = strlen($_POST["lname"]) > 1 ? "" : "Name must be atleast 1 character";
 
 
     // Validation loop and cookies handlers
@@ -79,21 +89,14 @@ ini_set("error_log", "php_errors.txt");
     } else $lname_value = "";
 
 
-    // // Check to see if age is invalid (is a non-integer or is not positive)
-    // if (isset($_POST["fname"])) {
-    //   if (strlen($_POST["fname"]) == 0) {
-    //       $fname_valid = FALSE;
-    //   }
-
-    // }
     // If all inputs are present and valid, proceed
     if (count($_POST) == 3) {
 
         if (empty($NHI_valid) && empty($fname_valid) && empty($lname_valid)) {
             // set cookies if valid info
-            setcookie("NHI", $NHI_value, time() + 3600, "/");
-            setcookie("fname", $fname_value, time() + 3600, "/");
-            setcookie("lname", $lname_value, time() + 3600, "/");
+            setcookie("patient-nhi", $NHI_value, time() + 3600, "/");
+            setcookie("patient-fname", $fname_value, time() + 3600, "/");
+            setcookie("patient-lname", $lname_value, time() + 3600, "/");
 
             header("Location:./php/sofa.php");
             exit();
@@ -118,27 +121,44 @@ ini_set("error_log", "php_errors.txt");
                 <input type="text" name="NHI" id="NHI-input" required value=<?php echo $NHI_value; ?>>
                 <label for="NHI-input" class="form-label">NHI</label>
 
+                <?php
+                // Add error message if error exists
+                if (!empty($NHI_valid)) {
+                    
+                    echo '<div data-type="validator-error">' . $NHI_valid . '</div>';
+                }
+                ?>
 
             </div>
             <div class="input-wrap">
                 <input type="text" name="fname" id="fname-input" required value=<?php echo $fname_value; ?>>
                 <label for="fname-input" class="form-label">First Name</label>
+
                 <?php
                 // Add error message if error exists
+
                 if (!empty($fname_valid)) {
                     echo '<div data-type="validator-error">' . $fname_valid . '</div>';
                 }
                 ?>
+
             </div>
             <div class="input-wrap">
                 <input type="text" name="lname" id="lname-input" required value=<?php echo $lname_value; ?>>
                 <label for="lname-input" class="form-label">Last Name</label>
+
+                <?php
+                // Add error message if error exists
+                if (!empty($lname_valid)) {
+                    echo '<div data-type="validator-error">' . $lname_valid . '</div>';
+                }
+                ?>
+
             </div>
             <div id="submit-wrap">
                 <button type="submit">Submit</button>
             </div>
         </form>
-
     </div>
 </body>
 

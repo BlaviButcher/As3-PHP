@@ -1,18 +1,5 @@
 <?php
-    var_dump(($_POST));
-    if (isset($_POST["NHI"])) { 
-        setcookie("NHI", $_POST["NHI"], time() + 3600, "/");
-    }
-
-    if (isset($_POST["fname"])) { 
-        setcookie("fname", $_POST["fname"], time() + 3600, "/");
-    }
-
-    if (isset($_POST["lname"])) { 
-        setcookie("lname", $_POST["lname"], time() + 3600, "/");
-    }
-
-    setcookie("hui", "hi", time() + 3600, "/");    
+    
 ?>
 
 <!DOCTYPE html>
