@@ -6,10 +6,6 @@ ini_set("error_log", "php_errors.txt");
 $is_valid_data = FALSE;
 ?>
 
-
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -105,7 +101,7 @@ $is_valid_data = FALSE;
             cardiovascular, hepatic,
             coagulation, renal and neurological systems.</p>
         <h2>Enter Credentials</h2>
-        <form id="user-credential-form" action="index.php" novalidate>
+        <form id="user-credential-form" action="index.php" method="post" novalidate>
             <div class="input-wrap">
 
                 <input type="text" name="NHI" id="NHI-input" required value=<?php echo $NHI_value; ?>>
@@ -146,66 +142,56 @@ $is_valid_data = FALSE;
 
             </div>
             <div id="submit-wrap">
-                <button id="submit-form" type="button">Submit</button>
+                <button type="submit">Submit</button>
             </div>
         </form>
     </div>
 
+    <?php
+    // If all inputs are present and valid, proceed
+    if (count($_POST) == 3) {
 
+        if (empty($NHI_valid) && empty($fname_valid) && empty($lname_valid)) {
+            
+            $is_valid_data = TRUE;
+                  
+        }
+    }
+?>
     <!-- Script will run in full when the data is valid and post to sofa.php -->
     <script>
-    console.log("hello");
+    let validData = <?php echo json_encode($is_valid_data, JSON_HEX_TAG); ?>;
+    console.log(validData);
+    if (validData) {
 
-    document.getElementById("submit-form").addEventListener("click", () => {
-        console.log("ello");
-        <?php
-                // If all inputs are present and valid, proceed
-                if (count($_POST) == 3) {
+        // Store key value pairs for easy traversal
+        let dataArray = {};
+        dataArray["NHI"] = <?php echo json_encode($_POST["NHI"], JSON_HEX_TAG);  ?>;
+        dataArray["fname"] = <?php echo json_encode($_POST["fname"], JSON_HEX_TAG);  ?>;
+        dataArray["lname"] = <?php echo json_encode($_POST["lname"], JSON_HEX_TAG); ?>;
 
-                    if (empty($NHI_valid) && empty($fname_valid) && empty($lname_valid)) {
-                        
-                        $is_valid_data = TRUE;
-                                                
-                    }
-                }
-            ?>
+        // Get new url
+        let url = window.location.href;
+        url = url.substring(0, url.lastIndexOf("/"));
+        url = `${url}/php/sofa.php`;
 
-
-        let validData = <?php echo json_encode($is_valid_data, JSON_HEX_TAG); ?>;
-        console.log(validData);
-        if (validData) {
-
-            // Store key value pairs for easy traversal
-            let dataArray = {};
-            dataArray["NHI"] = <?php echo json_encode($_POST["NHI"], JSON_HEX_TAG);  ?>;
-            dataArray["fname"] = <?php echo json_encode($_POST["fname"], JSON_HEX_TAG);  ?>;
-            dataArray["lname"] = <?php echo json_encode($_POST["lname"], JSON_HEX_TAG); ?>;
-
-            // Get new url
-            let url = window.location.href;
-            url = url.substring(0, url.lastIndexOf("/"));
-            url = `${url}/php/sofa.php`;
-
-            // create form to post data and redirect user
-            let form = document.createElement('form');
-            document.body.appendChild(form);
-            form.method = 'post';
-            form.action = url;
-            // fill post data
-            for (let key in dataArray) {
-                var input = document.createElement('input');
-                input.type = 'hidden';
-                input.name = key;
-                input.value = dataArray[key];
-                form.appendChild(input);
-            }
-            form.submit();
-            document.body.removeChild(form);
+        // create form to post data and redirect user
+        let form = document.createElement('form');
+        document.body.appendChild(form);
+        form.method = 'post';
+        form.action = url;
+        // fill post data
+        for (let key in dataArray) {
+            var input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = key;
+            input.value = dataArray[key];
+            form.appendChild(input);
         }
-
-    });
+        form.submit();
+        document.body.removeChild(form);
+    }
     </script>
-
 
 
 </body>
