@@ -3,7 +3,7 @@
 ini_set("error_reporting", E_ALL);
 ini_set("log_errors", "1");
 ini_set("error_log", "php_errors.txt");
-
+$is_valid_data = FALSE;
 ?>
 
 <!DOCTYPE html>
@@ -50,10 +50,10 @@ ini_set("error_log", "php_errors.txt");
 
     // Check to see if name is valid (has more then 1 char) - Set error message if invalid
     if (isset($_POST["fname"])) 
-        $fname_valid = strlen($_POST["fname"]) > 1 ? "" : "Name must be atleast 1 character";
+        $fname_valid = strlen($_POST["fname"]) > 1 ? "" : "Name must be atleast 2 character";
 
     if (isset($_POST["lname"]))
-        $lname_valid = strlen($_POST["lname"]) > 1 ? "" : "Name must be atleast 1 character";
+        $lname_valid = strlen($_POST["lname"]) > 1 ? "" : "Name must be atleast 2 character";
 
 
     // Validation loop and cookies handlers
@@ -152,13 +152,46 @@ ini_set("error_log", "php_errors.txt");
     if (count($_POST) == 3) {
 
         if (empty($NHI_valid) && empty($fname_valid) && empty($lname_valid)) {
-            // set cookies if valid info
             
-            header("Location:./php/sofa.php?patient-nhi=" . $_POST["NHI"] . "&patient-fname=" . $_POST["fname"] . "&paitent_lname=" . $_POST["lname"]);
-            exit();
+            $is_valid_data = TRUE;
+                  
         }
     }
 ?>
+    <!-- Script will run in full when the data is valid and post to sofa.php -->
+    <script>
+    let validData = <?php echo json_encode($is_valid_data, JSON_HEX_TAG); ?>;
+    console.log(validData);
+    if (validData) {
+
+        // Store key value pairs for easy traversal
+        let dataArray = {};
+        dataArray["NHI"] = <?php echo json_encode($_POST["NHI"], JSON_HEX_TAG);  ?>;
+        dataArray["fname"] = <?php echo json_encode($_POST["fname"], JSON_HEX_TAG);  ?>;
+        dataArray["lname"] = <?php echo json_encode($_POST["lname"], JSON_HEX_TAG); ?>;
+
+        // Get new url
+        let url = window.location.href;
+        url = url.substring(0, url.lastIndexOf("/"));
+        url = `${url}/php/sofa.php`;
+
+        // create form to post data and redirect user
+        let form = document.createElement('form');
+        document.body.appendChild(form);
+        form.method = 'post';
+        form.action = url;
+        // fill post data
+        for (let key in dataArray) {
+            var input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = key;
+            input.value = dataArray[key];
+            form.appendChild(input);
+        }
+        form.submit();
+        document.body.removeChild(form);
+    }
+    </script>
 
 
 </body>
