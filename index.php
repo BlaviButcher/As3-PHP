@@ -65,8 +65,8 @@ $is_valid_data = FALSE;
     // if first time display empty
     if (isset($_POST["NHI"])) {
         $NHI_value = $_POST["NHI"];
-    } else if (isset($_COOKIE["NHI"])) {
-        $NHI_value = $_COOKIE["NHI"];
+    } else if (isset($_COOKIE["patient-nhi"])) {
+        $NHI_value = $_COOKIE["patient-nhi"];
     } else $NHI_value = "";
 
     // if something is posted then replace previous cookie and set varaible
@@ -74,8 +74,8 @@ $is_valid_data = FALSE;
     // if first time display empty
     if (isset($_POST["fname"])) {
         $fname_value = $_POST["fname"];
-    } else if (isset($_COOKIE["fname"])) {
-        $fname_value = $_COOKIE["fname"];
+    } else if (isset($_COOKIE["patient-firstname"])) {
+        $fname_value = $_COOKIE["patient-firstname"];
     } else $fname_value = "";
 
     // if something is posted then replace previous cookie and set varaible
@@ -83,8 +83,8 @@ $is_valid_data = FALSE;
     // if first time display empty
     if (isset($_POST["lname"])) {
         $lname_value = $_POST["lname"];
-    } else if (isset($_COOKIE["lname"])) {
-        $lname_value = $_COOKIE["lname"];
+    } else if (isset($_COOKIE["patient-surname"])) {
+        $lname_value = $_COOKIE["patient-surname"];
         error_log($lname_value, 0);
     } else $lname_value = "";
 
@@ -144,6 +144,7 @@ $is_valid_data = FALSE;
 
             </div>
             <div id="submit-wrap">
+                <!-- TODO: Add enter key -->
                 <button type="submit">Submit</button>
             </div>
         </form>

@@ -1,6 +1,8 @@
 <?php
     session_start();
-    var_dump($_SESSION);
+    setcookie("patient-nhi", $_SESSION["NHI"], time() + 3600, "/");
+    setcookie("patient-firstname", $_SESSION["fname"], time() + 3600, "/");
+    setcookie("patient-surname", $_SESSION["lname"], time() + 3600, "/");
 ?>
 
 <!DOCTYPE html>
