@@ -1,5 +1,6 @@
 <!-- Errors -->
 <?php
+session_start();
 ini_set("error_reporting", E_ALL);
 ini_set("log_errors", "1");
 ini_set("error_log", "php_errors.txt");
@@ -29,12 +30,13 @@ $is_valid_data = FALSE;
 
     <!-- PHP code to validate URL variables on the server -->
     <?php
+    
     // ********************  PLEASE READ MARKER ***************************
     /* I ran this by Michael and he was fine with it. I've done a self validating
        php form using POST. I lose my POST when I get redirected to another page.
        I could have used get and then appended url variables to the redirection,
-       but this is clean. The only difference is the cookies are stored before
-       the redirection rather than after. Good day!
+       but this is clean. And using $_SESSION to pass front-end validation variables
+       best practice. Thanks!
     */
     
     // Assume that both name and age are valid
@@ -153,50 +155,16 @@ $is_valid_data = FALSE;
 
         if (empty($NHI_valid) && empty($fname_valid) && empty($lname_valid)) {
             
-<<<<<<< HEAD
-                  
-=======
-            header("Location:./php/sofa.php?patient-nhi=" . $_POST["NHI"] . "&patient-fname=" . $_POST["fname"] . "&paitent_lname=" . $_POST[lname]);
+            $_SESSION["NHI"] = $_POST["NHI"];
+            $_SESSION["fname"] = $_POST["fname"];
+            $_SESSION["lname"] = $_POST["lname"];
+            var_dump($_SESSION);
+            header("Location:./php/sofa.php");
             exit();
->>>>>>> parent of 1f3142a... :bug: index.php fixed error
         }
     }
-?>
-    <!-- Script will run in full when the data is valid and post to sofa.php -->
-    <script>
-    let validData = <?php echo json_encode($is_valid_data, JSON_HEX_TAG); ?>;
-    console.log(validData);
-    if (validData) {
 
-        // Store key value pairs for easy traversal
-        let dataArray = {};
-        dataArray["NHI"] = <?php echo json_encode($_POST["NHI"], JSON_HEX_TAG);  ?>;
-        dataArray["fname"] = <?php echo json_encode($_POST["fname"], JSON_HEX_TAG);  ?>;
-        dataArray["lname"] = <?php echo json_encode($_POST["lname"], JSON_HEX_TAG); ?>;
-
-        // Get new url
-        let url = window.location.href;
-        url = url.substring(0, url.lastIndexOf("/"));
-        url = `${url}/php/sofa.php`;
-
-        // create form to post data and redirect user
-        let form = document.createElement('form');
-        document.body.appendChild(form);
-        form.method = 'post';
-        form.action = url;
-        // fill post data
-        for (let key in dataArray) {
-            var input = document.createElement('input');
-            input.type = 'hidden';
-            input.name = key;
-            input.value = dataArray[key];
-            form.appendChild(input);
-        }
-        form.submit();
-        document.body.removeChild(form);
-    }
-    </script>
-
+    ?>
 
 </body>
 
