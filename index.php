@@ -16,7 +16,9 @@ $is_valid_data = FALSE;
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Patient Portal</title>
     <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/style.css">
     <link href="css/forms.css" rel="stylesheet">
+
 
     <!-- font-family: "Noto Sans", sans-serif; -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
