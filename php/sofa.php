@@ -21,20 +21,24 @@
 <body>
     <div id="card">
         <h1>SOFA Calculator</h1>
-        <form action="POST">
+        <form method="POST" action="./results.php">
             <fieldset>
                 <legend>Respiratory</legend>
                 <div id="respiratory-input">
-                    <label for="resiratory-figures">P<sub>a</sub>O<sub>2</sub></label>
-                    <input type="text" name="resiratory-figures" id="resiratory-figures">
+                    <label for="respiratory-figures">P<sub>a</sub>O<sub>2</sub></label>
+                    <input type="text" name="respiratory-figures" id="respiratory-figures">
+                    <select name="respiratory-units" id="respiratory-units">
+                        <option value="mmHg">mm Hg</option>
+                        <option value="kPa">kPa</option>
+                    </select>
                     <hr>
                     <label for="ventilated-input">Ventilated?</label>
                     <div>
-                        <input type="radio" id="yes" name="ventilation-input" value="yes" checked>
+                        <input type="radio" id="yes" name="ventilation-input" value="true" checked>
                         <label for="yes">Yes</label>
                     </div>
                     <div>
-                        <input type="radio" id="no" name="ventilation-input" value="no" checked>
+                        <input type="radio" id="no" name="ventilation-input" value="false" checked>
                         <label for="no">No</label>
                     </div>
                 </div>

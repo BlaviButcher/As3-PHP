@@ -87,7 +87,7 @@ $is_valid_data = FALSE;
         $lname_value = $_POST["lname"];
     } else if (isset($_COOKIE["patient-surname"])) {
         $lname_value = $_COOKIE["patient-surname"];
-        error_log($lname_value, 0);
+
     } else $lname_value = "";
 
 
