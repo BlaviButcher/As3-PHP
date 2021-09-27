@@ -1,12 +1,15 @@
 <?php 
-   var_dump($_POST);
    $respiratoryScore = getRespiratoryScore();
-   $glasgowScore = getGlasgowComaInput();
-   $cardioVascularScore = getCardioVascularInput();
-   $liverScore = getLiverInput();
-   $plateletScore = getPlateletInput();
-   $creatineScore = getCreatineInput();
+   $glasgowInput = getGlasgowComaInput();
+   $cardioVascularInput = getCardioVascularInput();
+   $liverInput = getLiverInput();
+   $plateletInput = getPlateletInput();
+   $creatineInput = getCreatineInput();
 
+   $totalScore = getTotalScore();
+   echo $totalScore;
+?>
+<?php
    function getRespiratoryScore() {
       //  array of the ranges that the respiratory could fall into. 
       // incudes the alternative units
@@ -119,6 +122,6 @@
    }
 
    function getTotalScore() {
-
+      return $GLOBALS["respiratoryScore"] + $_POST["glasgow-coma"] + $_POST["cardiovascular-score"] + $_POST["liver-score"] + $_POST["platelets-score"] + $_POST["creatinine-score"];
    }
 ?>
