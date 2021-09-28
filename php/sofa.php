@@ -25,11 +25,13 @@
             <fieldset>
                 <legend>Respiratory</legend>
                 <div id="respiratory-input">
-                    <label for="respiratory-figures">P<sub>a</sub>O<sub>2</sub></label>
-                    <input type="text" name="respiratory-figures" id="respiratory-figures">
-                    <select name="respiratory-units" id="respiratory-units">
-                        <option value="mmHg">mm Hg</option>
-                        <option value="kPa">kPa</option>
+                    <label for="respiratory-figures">P<sub>a</sub>O<sub>2</sub>/FiO<sub>2</sub> [mmHg (kPa)] </label>
+                    <select name="respiratory-figures" id="respiratory-figures">
+                    <option value="0">&#8805 400 (53.3)</option>
+                    <option value="1">&lt 400 (53.3)</option>
+                    <option value="2">&lt 300 (40)</option>
+                    <option value="3">&lt 200 (26.7)</option>
+                    <option value="4">&lt 100 (13.3)</option>
                     </select>
                     <hr>
                     <label for="ventilated-input">Ventilated?</label>
