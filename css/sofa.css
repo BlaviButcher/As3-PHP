@@ -1,7 +1,8 @@
 body {
+  text-align: center;
   font-family: "Noto Sans", sans-serif;
   height: 100vh;
-  padding: 12.5% 0;
+  padding: 10% 0;
   margin: 0;
   /* set contents center */
   display: flex;
@@ -13,8 +14,21 @@ body {
   background: linear-gradient(to right, #24243e, #302b63, #0f0c29);
 }
 
+select {
+  text-align-last: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+option {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 #card {
-  width: 70%;
+  width: 40%;
   min-height: 100%;
   height: auto;
   margin: 40px 0;
@@ -26,4 +40,15 @@ body {
   display: flex;
   flex-direction: column;
   margin: 0 0 20px;
+}
+
+.input-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#respiratory-input {
+  display: flex;
+  flex-direction: column;
 }
