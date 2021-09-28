@@ -78,6 +78,22 @@
    }
 
    function getTotalScore() {
-      return $GLOBALS["respiratoryInfo"]["score"] + $_POST["glasgow-coma"] + $_POST["cardiovascular-score"] + $_POST["liver-score"] + $_POST["platelets-score"] + $_POST["creatinine-score"];
+      return $GLOBALS["respiratoryInfo"]["score"] + 
+      $_POST["glasgow-coma"] + $_POST["cardiovascular-score"] + 
+      $_POST["liver-score"] + $_POST["platelets-score"] + 
+      $_POST["creatinine-score"];
    }
 ?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Results</title>
+</head>
+<body>
+   
+</body>
+</html>

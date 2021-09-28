@@ -29,3 +29,24 @@ body {
 h1 {
   text-align: center;
 }
+
+button {
+  background-color: #574fb4;
+  border: none;
+  color: #f7f4f3;
+  font-weight: 500;
+  font-size: 1.25rem;
+  width: 50%;
+  border-radius: 1rem;
+  margin-top: 1rem;
+}
+
+button:hover {
+  background-color: #423b8d;
+}
+
+#submit-wrap {
+  display: flex;
+  justify-content: center;
+  flex: 0.4;
+}

@@ -18,6 +18,12 @@ body {
   min-height: 100%;
   height: auto;
   margin: 40px 0;
-
+  padding: 20px;
   border-radius: 40px;
+}
+
+#patient-details {
+  display: flex;
+  flex-direction: column;
+  margin: 0 0 20px;
 }
